@@ -9,7 +9,7 @@ Code to build the resume will go here.
 
 // Biography Section in object
 var bio = {
-    "name" : "Anilkumar P",
+    "name" : "Anil Kumar P",
     "role" : "Full Stack Software Engineer & Lead",
     "welcomeMsg" : "Welcome to Anilkumar Biography",
     "bioPic" : "images/fry.jpg",
@@ -156,14 +156,14 @@ var education = {
             "name" : "San Jose State University",
             "location" : "San Jose, CA",
             "degree_dates" : 2005,
-            "majors" : ["Software Engineering"],
+            "majors" : ["M.S. Software Engineering"],
             "url" : "http://www.sjsu.edu/"
         },
         {
             "name" : "Dayananda Sagar College of Engineering",
             "location" : "Bangalore, KA",
             "degree_dates" : 1997,
-            "majors" : ["Computer Science and Engineering"],
+            "majors" : ["B.E. Computer Science and Engineering"],
             "url" : "http://dayanandasagar.edu/"
         }
     ],
@@ -176,6 +176,55 @@ var education = {
         }
     ]
 };
+
+// Education Section Display Function
+education.display = function () {
+    // For loop to iterate through all education schools and display each school details
+    for (school in education.schools) {
+        
+        $("#education").append(HTMLschoolStart);
+        
+        // School - Name
+        var formattedName = HTMLschoolName.replace("%data%", education.schools[school].name);
+        $(".education-entry:last").append(formattedName);
+
+        // School - Dates
+        var formattedDates = HTMLschoolDates.replace("%data%", education.schools[school].degree_dates);
+        $(".education-entry:last").append(formattedDates);
+
+        // School - Location
+        var formattedLocation = HTMLschoolLocation.replace("%data%", education.schools[school].location);
+        $(".education-entry:last").append(formattedLocation);
+
+        // School - Majors
+        if (education.schools[school].majors.length > 0) {
+            for (major in education.schools[school].majors) {
+                var formattedMajor = HTMLschoolMajor.replace("%data%", education.schools[school].majors[major]);
+                $(".education-entry:last").append(formattedMajor);
+            }
+        }
+    }
+
+    // For loop to iterate through all online courses and display each online course details
+    for (onlineCourse in education.onlineCourses) {
+        
+        $(".education-entry:last").append(HTMLonlineClasses);
+        
+        // Online Course - Title - School
+        var formattedTitle = HTMLonlineTitle.replace("%data%", education.onlineCourses[onlineCourse].title);
+        var formattedSchool = HTMLonlineSchool.replace("%data%", education.onlineCourses[onlineCourse].school);
+        var formattedTitleSchool = formattedTitle + formattedSchool;
+        $(".education-entry:last").append(formattedTitleSchool);
+
+        // Online Course - Dates
+        var formattedDates = HTMLonlineDates.replace("%data%", education.onlineCourses[onlineCourse].dates);
+        $(".education-entry:last").append(formattedDates);
+
+        // Online Course - URL
+        var formattedURL = HTMLonlineURL.replace("%data%", education.onlineCourses[onlineCourse].url);
+        $(".education-entry:last").append(formattedURL);
+    }
+}
 
 
 // Header Section Display
@@ -222,6 +271,9 @@ work.display();
 
 // Project Section Display
 projects.display();
+
+// Education Section Display
+education.display();
 
 // Map showing where I've lived and worked
 $("#mapDiv").append(googleMap);
