@@ -159,3 +159,48 @@ var edu = {
         }
     ]
 };
+
+// While loop
+var cameron = {};
+cameron.job = "course dev";
+
+var makeCourse = function() {
+    // make a course
+    console.log("Made a course");
+}
+
+var courses = 0;
+while (cameron.job === "course dev") {
+    makeCourse();
+    courses = courses + 1;
+    if (courses === 10) {
+        cameron.job = "learning specialist";
+    }
+}
+
+console.log(cameron.job);
+
+// For loop 
+for (var i = 0; i < 9; i++) {
+    console.log(i);
+}
+
+// For loop in
+var countries = ["Germany", "Argentina", "Brazil", "Netherlands"];
+for (country in countries) {
+    console.log(country);
+    console.log(countries[country]);
+}
+
+// Locationizer: Returns array of locations in a given object
+function locationizer(work_obj) {
+    var locations = [];
+
+    work.jobs.forEach(function(job){
+      locations.push(job.location);
+    });
+
+    return locations;
+}
+
+console.log(locationizer(work));

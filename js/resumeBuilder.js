@@ -6,7 +6,26 @@ Code to build the resume will go here.
 // All the Resume Sections
 //
 
-// Work in JSON format
+
+// Biography Section in object
+var bio = {
+    "name" : "Anilkumar P",
+    "role" : "Full Stack Software Engineer & Lead",
+    "welcomeMsg" : "Welcome to Anilkumar Biography",
+    "bioPic" : "images/fry.jpg",
+    "contacts" : {
+        "mobile" : "510-640-6156",
+        "email" : "panilkumar16@gmail.com",
+        "github" : "panilkumar16",
+        "location" : "San Francisco Bay Area"
+    },
+    "skills" : [
+        "HTML", "CSS", "JavaScript", "Python", "Django"
+    ]
+};
+
+
+// Work Section in JSON format
 var work = {
     "jobs" : [
         {
@@ -47,7 +66,28 @@ var work = {
     ]
 };
 
-// Project in JSON format
+// Work Section Display Function
+work.display = function () {
+    // For loop to iterate through all jobs and display each job details
+    for (job in work.jobs) {
+        // Employer - Title
+        $("#workExperience").append(HTMLworkStart);
+        var formattedEmployer = HTMLworkEmployer.replace("%data%", work.jobs[job].employer);
+        var formattedTitle = HTMLworkTitle.replace("%data%", work.jobs[job].title);
+        var formattedEmployerTitle = formattedEmployer + formattedTitle;
+        $(".work-entry:last").append(formattedEmployerTitle);
+
+        // Dates
+        var formattedDates = HTMLworkDates.replace("%data%", work.jobs[job].dates);
+        $(".work-entry:last").append(formattedDates);
+
+        // Description
+        var formattedDescription = HTMLworkDescription.replace("%data%", work.jobs[job].description);
+        $(".work-entry:last").append(formattedDescription);
+    }
+}
+
+// Project Section in JSON format
 var projects = {
     "projects" : [
         {
@@ -65,24 +105,37 @@ var projects = {
     ]
 };
 
-// Biography in object
-var bio = {
-    "name" : "Anilkumar P",
-    "role" : "Full Stack Software Engineer & Lead",
-    "welcomeMessage" : "Welcome to Anilkumar Biography",
-    "bioPic" : "images/pic.jpg",
-    "contacts" : {
-        "mobile" : "510-640-6156",
-        "email" : "panilkumar16@gmail.com",
-        "github" : "panilkumar16",
-        "location" : "San Francisco Bay Area"
-    },
-    "skills" : [
-        "HTML", "CSS", "JavaScript", "Python", "Django"
-    ]
-};
+// Projects Section Display Function
+projects.display = function () {
+    // For loop to iterate through all projects and display each project details
+    for (project in projects.projects) {
+        
+        $("#projects").append(HTMLprojectStart);
+        
+        // Project - Title
+        var formattedTitle = HTMLprojectTitle.replace("%data%", projects.projects[project].title);
+        $(".project-entry:last").append(formattedTitle);
 
-// Education in JSON format
+        // Project - Dates
+        var formattedDates = HTMLprojectDates.replace("%data%", projects.projects[project].dates);
+        $(".project-entry:last").append(formattedDates);
+
+        // Project - Description
+        var formattedDescription = HTMLprojectDescription.replace("%data%", projects.projects[project].description);
+        $(".project-entry:last").append(formattedDescription);
+
+        // Project - Images
+        if (projects.projects[project].images.length > 0) {
+            for (image in projects.projects[project].images) {
+                var formattedImage = HTMLprojectImage.replace("%data%", projects.projects[project].images[image]);
+                $(".project-entry:last").append(formattedImage);
+            }
+        }
+    }
+}
+
+
+// Education Section in JSON format
 var education = {
     "schools" : [
         {
@@ -123,3 +176,64 @@ var education = {
         }
     ]
 };
+
+
+// Header Section Display
+// Name
+var formattedName = HTMLheaderName.replace("%data%", bio.name);
+$("#header").append(formattedName);
+// Role
+var formattedRole = HTMLheaderRole.replace("%data%", bio.role);
+$("#header").append(formattedRole);
+// Contacts
+var formattedMobile = HTMLmobile.replace("%data%", bio.contacts.mobile);
+var formattedEmail = HTMLemail.replace("%data%", bio.contacts.email);
+var formattedGithub = HTMLgithub.replace("%data%", bio.contacts.github);
+var formattedLocation = HTMLlocation.replace("%data%", bio.contacts.location);
+var formattedTopContacts = formattedMobile + formattedEmail + formattedGithub + formattedLocation;
+$("#header").append(formattedTopContacts);
+// Picture
+var formattedBioPic = HTMLbioPic.replace("%data%", bio.bioPic);
+$("#header").append(formattedBioPic);
+// Welcome Message
+var formattedWelcomeMsg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMsg);
+$("#header").append(formattedWelcomeMsg);
+// Skills
+// Check if biography skills exists, if exists display in header
+if (bio.skills.length > 0) {
+    $("#header").append(HTMLskillsStart);
+
+    var formattedSkill = HTMLskills.replace("%data%", bio.skills[0]);
+    $("#skills").append(formattedSkill);
+    formattedSkill = HTMLskills.replace("%data%", bio.skills[1]);
+    $("#skills").append(formattedSkill);
+    formattedSkill = HTMLskills.replace("%data%", bio.skills[2]);
+    $("#skills").append(formattedSkill);
+    formattedSkill = HTMLskills.replace("%data%", bio.skills[3]);
+    $("#skills").append(formattedSkill);
+    formattedSkill = HTMLskills.replace("%data%", bio.skills[4]);
+    $("#skills").append(formattedSkill);
+    console.log(bio.skills);
+}
+
+
+// Work Section Display
+work.display();
+
+// Project Section Display
+projects.display();
+
+// Map showing where I've lived and worked
+$("#mapDiv").append(googleMap);
+
+// Internationalize Names
+function inName(name) {
+    name = name.trim().split(" ");
+    console.log(name);
+    name[1] = name[1].toUpperCase();
+    name[0] = name[0].slice(0, 1).toUpperCase() + name[0].slice(1).toLowerCase();
+
+    return name[0] + " " + name[1];
+}
+
+$("#main").append(internationalizeButton)
